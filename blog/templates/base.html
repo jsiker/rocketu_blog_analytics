@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load leaflet_tags %}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,8 @@
         <title>My Blog</title>
 
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        {% leaflet_js %}
+        {% leaflet_css %}
     </head>
     <body>
         <div class="container">
@@ -16,6 +19,8 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'blog' %}">Blog</a></li>
+                    <li><a href="{% url 'analytics' %}">Analytics</a></li>
+
                 </ul>
                 <h3 class="text-muted">My Blog</h3>
             </div>
@@ -29,18 +34,43 @@
 
                 <div class="col-md-2">
                     <div>Blog tags go here!</div>
+                    {% for tag in post_tags %}
+                    <ul>
+{#                        <li>{{ tag.name }} tagged {{ tag.posts.count }} times</li>#}
+                        <li><a href="{% url 'tag' tag.name %}">{{ tag.name }}</a> ({{ tag.posts.count }})</li>
+                    </ul>
+                    {% endfor %}
                 </div>
             </div>
 
             <hr>
 
             <div class="row">
-                <div class="col-md-12">Latest blog post goes here!</div>
+                <div class="col-md-6 well">
+                    <h3>Checkout our latest post!</h3>
+                    <h4>{{ latest_post.title }}</h4>
+                    <div>by {{ latest_post.author }} on {{ latest_post.created }}</div>
+                    <a href="{% url 'post' latest_post.pk %}">Read it!</a>
+                </div>
             </div>
 
             <hr>
 
             <div class="footer">
+                <div class="pull-right">Welcome user from {{ location.city }}!</div>
+                <a href="{{ ad.img_url }}">
+                    <div align="center">Here's an ad just for you!</div>
+                    <img src="{{ ad.upload.url }}">
+                </a>
+    <style>
+
+    #leaflet-container {  /* all maps */
+        width:  600px;
+        height: 400px;
+    }
+
+    </style>
+                <div align="center" id="leaflet-container">{% leaflet_map "site_visits" %}</div>
                 <p>&copy; My Blog 2014</p>
             </div>
         </div>

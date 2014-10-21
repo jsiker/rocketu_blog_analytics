@@ -1,4 +1,6 @@
 from django.db import models
+import localflavor
+from localflavor.us.models import USStateField
 
 
 class Author(models.Model):
@@ -25,3 +27,13 @@ class Post(models.Model):
 
     def __unicode__(self):
         return u"{}".format(self.title)
+
+
+class Ad(models.Model):
+    title = models.CharField(max_length=30)
+    img_url = models.URLField(unique=True)
+    state = USStateField()
+    upload = models.ImageField(upload_to='img', blank=True)
+
+    def __unicode__(self):
+        return u"{}, {}, {}".format(self.title, self.img_url, self.state)

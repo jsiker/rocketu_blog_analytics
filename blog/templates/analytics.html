@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main %}
+       {% for page in pages %}
+{#           {% for view in pages %}#}
+        <div class="row">
+            <div class="col-md-12">
+{#                <ul><a href="{% url 'analytics' page.url %}">{{ page.url }}</a></ul>#}
+                <ul>{{ page.url }}{{ views }}</ul>
+            </div>
+        </div>
+               {% endfor %}
+{#    {% endfor %}#}
+{% endblock main %}
+

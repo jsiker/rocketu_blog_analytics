@@ -8,7 +8,7 @@ from fabric.state import *
 env.hosts = ['54.69.116.111']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/blog_analytics.pem'
-env.shell = 'bin/bash/ -l -i -c'
+env.shell = '/bin/bash -l -i -c'
 # env.warn_only = True
 
 @task
@@ -26,9 +26,9 @@ def deploy():
     with prefix('workon blog_analytics'):
         with cd('/home/ubuntu/rocketu_blog_analytics'):
             run('git pull origin master')
-            # run('pip install -r requirements.txt')
-            # run('python manage.py migrate')
-            # run('python manage.py collectstatic --noinput')
+            run('pip install -r requirements.txt')
+            run('python manage.py migrate')
+            run('python manage.py collectstatic --noinput')
 
     restart_app()
 
@@ -52,6 +52,27 @@ def setup_postgres(database_name, password):
         sudo("createdb {}".format(database_name))
         alter_user_statement = "ALTER USER {} WITH PASSWORD '{}';".format(database_name, password)
         sudo('psql -c "{}"'.format(alter_user_statement))
+
+@task
+def setup_gunicorn(project_name):
+    upload_template("./deploy/gunicorn.conf.py",
+                    "/home/ubuntu/{}".format(project_name),
+                    {'project_name': project_name},
+                    use_sudo=True,
+                    backup=False)
+
+    restart_app()
+
+@task
+def setup_supervisor(project_name, virtualenv):
+    upload_template("./deploy/supervisor.conf",
+                    "/etc/supervisor/conf.d/{}.conf".format(project_name),
+                    {'project_name': project_name,
+                     'virtualenv': virtualenv},
+                    use_sudo=True,
+                    backup=False)
+
+    restart_app()
 
 @task
 def hello():

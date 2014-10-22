@@ -20,5 +20,4 @@ def ad(request):
     random_ad = Ad.objects.filter(state=location).order_by('?')[0]
     return {
         'ad': random_ad
-        # 'ad': Ad.objects.filter(id=3)
-    }
+     }

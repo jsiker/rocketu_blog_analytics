@@ -5,4 +5,4 @@ requests==2.4.3
 django-localflavor==1.0
 django-leaflet==0.14.1
 Pillow==2.6.1
-
+raven==5.1.1

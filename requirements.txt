@@ -10,3 +10,4 @@ django-ipware==0.1.0
 newrelic==2.34.0.29
 paramiko==1.15.1
 pycrypto==2.6.1
+Fabric==1.10.0

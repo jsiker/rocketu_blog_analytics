@@ -112,6 +112,9 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__fi
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "static", *MEDIA_URL.strip("/").split("/"))
 
+import appenlight_client.client as e_client
+APPENLIGHT = e_client.get_config({'appenlight.api_key':'147998de1ef645329520990a0b0a1171'})
+
 
 try:
     from local_settings import *

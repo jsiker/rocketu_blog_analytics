@@ -3,3 +3,6 @@
 - name: Ensure we have latest code from repo
   git: repo={{ git_repo }} dest={{ project_path }} accept_hostkey=yes
   tags: git
+
+- name: Ensure ubuntu owns project
+  file: state=directory path={{ project_path }} owner=ubuntu

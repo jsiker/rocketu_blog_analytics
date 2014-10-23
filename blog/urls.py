@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^tag/(\w+)/$', 'blog.views.tag', name='tag'),
     url(r'^analytics/$', 'analytics.views.analytics', name='analytics'),
     # url(r'^analytics/(\.*?)$', 'analytics.views.analytics', name='analytics'),
+    url(r'^error/$', 'blog.views.error', name='error'),
 )
 
 if settings.DEBUG:

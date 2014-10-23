@@ -16,7 +16,7 @@
     app_path: '{{ project_path }}'
     virtualenv: '{{ virtualenv_path }}'
     settings: '{{ django_settings_file }}'
-  tags: django
+  tags: migrate
 
 - name: Run Django collectstatic
   django_manage:

@@ -41,10 +41,11 @@ INSTALLED_APPS = (
     'localflavor',
     'leaflet',
     'raven.contrib.django.raven_compat',
+    'compressor'
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'appenlight_client.django_middleware.AppenlightMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'analytics.middleware.LocationMiddleware',
     'analytics.middleware.PageViewMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 
 
 )
@@ -121,3 +123,10 @@ try:
     from local_settings import *
 except ImportError:
     pass
+COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
+COMPRESS_CSS_FILTERS = ['compressor.filters.cssmin.CSSMinFilter']
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)

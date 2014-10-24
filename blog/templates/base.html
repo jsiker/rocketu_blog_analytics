@@ -8,6 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>%%%%%%%%%</title>
+        {% load compress %}
+        {% compress js %}
+            <script src="{% static 'js/mixpanel.js' %}"></script>
+        {% endcompress %}
 
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
         {% leaflet_js %}
